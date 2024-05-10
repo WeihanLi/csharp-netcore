@@ -1,17 +1,18 @@
-[![nuget](https://img.shields.io/nuget/v/OpenTracing.Contrib.NetCore.svg?logo=nuget)](https://www.nuget.org/packages/OpenTracing.Contrib.NetCore)
-
 # OpenTracing instrumentation for .NET Core apps
+
+[![nuget](https://img.shields.io/nuget/v/Spark.OpenTracing.Contrib.NetCore.svg?logo=nuget)](https://www.nuget.org/packages/Spark.OpenTracing.Contrib.NetCore)
 
 This repository provides OpenTracing instrumentation for .NET Core based applications.
 It can be used with any OpenTracing compatible tracer.
 
 _**IMPORTANT:** OpenTracing and OpenCensus have merget to form **[OpenTelemetry](https://opentelemetry.io)**! The OpenTelemetry .NET library can be found at [https://github.com/open-telemetry/opentelemetry-dotnet](https://github.com/open-telemetry/opentelemetry-dotnet)._
 
+> Removed version lock in the original repo <https://github.com/opentracing-contrib/csharp-netcore>, only for build
+> You should move to OpenTelemetry instead
+
 ## Supported .NET versions
 
-This project currently only supports apps targeting .NET Core 3.1, .NET 6.0, or .NET 7.0!
-
-This project DOES NOT support the full .NET framework as that uses different instrumentation code.
+This project currently only supports apps targeting .NET 6.0 +
 
 ## Supported libraries and frameworks
 

@@ -68,7 +68,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(builder));
 
             builder.AddDiagnosticSubscriber<HttpHandlerDiagnostics>();
-            builder.ConfigureGenericDiagnostics(options => options.IgnoredListenerNames.Add(HttpHandlerDiagnostics.DiagnosticListenerName));
+            builder.ConfigureGenericDiagnostics(x => x.IgnoredListenerNames.Add(HttpHandlerDiagnostics.DiagnosticListenerName));
 
             return ConfigureHttpHandler(builder, options);
         }
@@ -192,7 +192,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(builder));
 
             builder.AddDiagnosticSubscriber<SqlClientDiagnostics>();
-            builder.ConfigureGenericDiagnostics(options => options.IgnoredListenerNames.Add(SqlClientDiagnostics.DiagnosticListenerName));
+            builder.ConfigureGenericDiagnostics(x => x.IgnoredListenerNames.Add(SqlClientDiagnostics.DiagnosticListenerName));
 
             return ConfigureSystemSqlClient(builder, options);
         }

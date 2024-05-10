@@ -61,14 +61,7 @@ namespace OpenTracing.Contrib.NetCore.Configuration
 
             IgnorePatterns.Add((request) =>
             {
-                IDictionary<string, object> requestOptions;
-
-#if NETCOREAPP3_1
-                requestOptions = request.Properties;
-#else 
-                requestOptions = request.Options;
-#endif
-
+                IDictionary<string, object> requestOptions = request.Options;
                 return requestOptions.ContainsKey(PropertyIgnore);
             });
 

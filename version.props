@@ -13,10 +13,10 @@
     -->
 
     <!-- Prefix for non-tagged (local/regular CI) builds -->
-    <VersionPrefix>99.99.99</VersionPrefix>
+    <VersionPrefix>0.10.0</VersionPrefix>
 
     <!-- Suffix for loal builds -->
-    <VersionSuffix>loc$([System.DateTime]::UtcNow.ToString('yyyyMMddHHmm'))</VersionSuffix>
+    <VersionSuffix></VersionSuffix>    
 
     <!-- Suffix for regular AppVeyor builds -->
     <VersionSuffix Condition="'$(APPVEYOR_BUILD_NUMBER)' != ''">ci$([System.Int32]::Parse($(APPVEYOR_BUILD_NUMBER)).ToString('D4'))</VersionSuffix>

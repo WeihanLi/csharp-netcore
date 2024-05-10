@@ -73,17 +73,10 @@ namespace OpenTracing.Contrib.NetCore.Tests.CoreFx
             _httpHandler = new MockHttpMessageHandler();
 
             // Wrap with DiagnosticsHandler (which is internal :( )
-#if NETCOREAPP3_1
-            Type type = typeof(HttpClientHandler).Assembly.GetType("System.Net.Http.DiagnosticsHandler");
-            ConstructorInfo constructor = type.GetConstructors(BindingFlags.Instance | BindingFlags.Public)[0];
-            HttpMessageHandler diagnosticsHandler = (HttpMessageHandler)constructor.Invoke(new object[] { _httpHandler });
-#else
             DistributedContextPropagator propagator = DistributedContextPropagator.CreateDefaultPropagator();
-
             Type type = typeof(HttpClientHandler).Assembly.GetType("System.Net.Http.DiagnosticsHandler");
             ConstructorInfo constructor = type.GetConstructors(BindingFlags.Instance | BindingFlags.Public)[0];
             HttpMessageHandler diagnosticsHandler = (HttpMessageHandler)constructor.Invoke(new object[] { _httpHandler, propagator, false /* autoRedirect */ });
-#endif
 
             _httpClient = new HttpClient(diagnosticsHandler);
         }
@@ -161,11 +154,7 @@ namespace OpenTracing.Contrib.NetCore.Tests.CoreFx
         [Fact]
         public async Task Does_not_inject_trace_headers_if_disabled_in_options()
         {
-#if NETCOREAPP3_1
-            _options.InjectEnabled = req => !req.Properties.ContainsKey("ignore");
-#else
             _options.InjectEnabled = req => !((IDictionary<string, object>)req.Options).ContainsKey("ignore");
-#endif
 
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri("http://www.example.com/api/values"));
             SetRequestOption(request, "ignore", true);
@@ -189,11 +178,7 @@ namespace OpenTracing.Contrib.NetCore.Tests.CoreFx
         [Fact]
         public async Task Ignores_requests_with_custom_rule()
         {
-#if NETCOREAPP3_1
-            _options.IgnorePatterns.Add(req => req.Properties.ContainsKey("foo"));
-#else
             _options.IgnorePatterns.Add(req => ((IDictionary<string, object>) req.Options).ContainsKey("foo"));
-#endif
 
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri("http://www.example.com/api/values"));
             SetRequestOption(request, "foo", 1);
@@ -279,11 +264,7 @@ namespace OpenTracing.Contrib.NetCore.Tests.CoreFx
 
         private void SetRequestOption<TValue>(HttpRequestMessage request, string key, TValue value)
         {
-#if NETCOREAPP3_1
-            request.Properties[key] = value;
-#else
             request.Options.Set(new HttpRequestOptionsKey<TValue>(key), value);
-#endif
         }
     }
 }

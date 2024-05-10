@@ -145,6 +145,7 @@ namespace OpenTracing.Contrib.NetCore.Tests.AspNetCore
 
             var finishedSpans = _tracer.FinishedSpans();
             Assert.Single(finishedSpans);
+            await Task.Delay(1000);
 
             var span = finishedSpans[0];
             Assert.Equal(404, span.Tags[Tags.HttpStatus.Key]);
